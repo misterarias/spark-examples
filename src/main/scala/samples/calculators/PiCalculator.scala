@@ -1,5 +1,9 @@
+package samples.calculators
+
+import org.apache.spark.SparkContext
+
 /*
- * Copyright 2018 - Schibsted.
+ * Copyright 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,25 +17,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+class PiCalculator(numSamples: Int, sc: SparkContext) {
 
-import org.scalatest._
+  def montecarlo: Double = {
+    val inSamples = sc.parallelize(1 to numSamples).filter(_ => {
+      val x = math.random
+      val y = math.random
+      x * x + y * y < 1
+    }).count()
 
-import scala.collection.mutable
-
-class ExampleSpec extends FlatSpec with Matchers {
-
-  "A Stack" should "pop values in last-in-first-out order" in {
-    val stack = new mutable.Stack[Int]
-    stack.push(1)
-    stack.push(2)
-    stack.pop() should be(2)
-    stack.pop() should be(1)
-  }
-
-  it should "throw NoSuchElementException if an empty stack is popped" in {
-    val emptyStack = new mutable.Stack[Int]
-    a[NoSuchElementException] should be thrownBy {
-      emptyStack.pop()
-    }
+    4.0 * inSamples / numSamples
   }
 }
