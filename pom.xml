@@ -16,14 +16,35 @@
         <spark.version>2.2.0</spark.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <repositories>
         <repository>
             <id>spark-packages</id>
             <name>Spark Packages Repository</name>
             <url>https://dl.bintray.com/spark-packages/maven/</url>
         </repository>
+        <!-- Allow  SuperSafe Community Edition Scala compiler plugin -->
+        <repository>
+            <id>artima</id>
+            <name>Artima Maven Repository</name>
+            <url>http://repo.artima.com/releases</url>
+        </repository>
     </repositories>
+
     <dependencies>
+        <!-- Testing libraries -->
+        <dependency>
+            <groupId>org.scalactic</groupId>
+            <artifactId>scalactic_${scala.compactVersion}</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scala.compactVersion}</artifactId>
+            <version>3.0.5</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.scala-lang/scala-library -->
         <dependency>
             <groupId>org.scala-lang</groupId>
@@ -58,6 +79,15 @@
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
                 <version>3.2.1</version>
+                <configuration>
+                    <compilerPlugins>
+                        <compilerPlugin>
+                            <groupId>com.artima.supersafe</groupId>
+                            <artifactId>supersafe_${scala.version}</artifactId>
+                            <version>1.1.3</version>
+                        </compilerPlugin>
+                    </compilerPlugins>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
