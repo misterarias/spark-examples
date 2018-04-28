@@ -4,16 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.datio.spark</groupId>
-    <artifactId>utils-parent</artifactId>
+    <artifactId>code-samples</artifactId>
     <version>0.9.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>Spark utilities parent</name>
 
     <properties>
         <java.version>1.8</java.version>
-        <scala.version>2.11.8</scala.version>
+        <scala.version>2.11.12</scala.version>
         <scala.compactVersion>2.11</scala.compactVersion>
-        <spark.version>2.2.0</spark.version>
+        <spark.version>2.3.0</spark.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -33,11 +33,6 @@
 
     <dependencies>
         <!-- Testing libraries -->
-        <dependency>
-            <groupId>org.scalactic</groupId>
-            <artifactId>scalactic_${scala.compactVersion}</artifactId>
-            <version>3.0.5</version>
-        </dependency>
         <dependency>
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_${scala.compactVersion}</artifactId>
@@ -62,8 +57,6 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>src/main/scala</sourceDirectory>
-        <testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -105,40 +98,31 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+            <!-- disable surefire -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <!-- enable scalatest -->
+            <plugin>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest-maven-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    <junitxml>.</junitxml>
+                    <filereports>WDF TestSuite.txt</filereports>
+                </configuration>
                 <executions>
                     <execution>
-                        <phase>install</phase>
+                        <id>test</id>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>test</goal>
                         </goals>
-                        <configuration>
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                        <exclude>META-INF/*.SF</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>com.apple:AppleJavaExtensions:*</exclude>
-                                    <exclude>javax.servlet:*</exclude>
-                                    <exclude>org.apache.hadoop:*</exclude>
-                                    <exclude>org.apache.maven.plugins:*</exclude>
-                                    <exclude>org.apache.parquet:*</exclude>
-                                    <exclude>org.apache.spark:*</exclude>
-                                    <exclude>org.scala-lang:*</exclude>
-                                </excludes>
-                            </artifactSet>
-                            <finalName>${project.artifactId}-${project.version}-uber</finalName>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
