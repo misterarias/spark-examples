@@ -1,8 +1,7 @@
-package samples
+package samples.utils
 
 import org.apache.spark.SparkContext
 import org.scalatest.{BeforeAndAfter, FlatSpec}
-import samples.utils.SparkUtils
 
 /*
  * Copyright 2018.
@@ -19,7 +18,7 @@ import samples.utils.SparkUtils
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class BaseSpec extends FlatSpec with BeforeAndAfter {
+class TestHelper extends FlatSpec with BeforeAndAfter {
 
   var sc: SparkContext = _
 

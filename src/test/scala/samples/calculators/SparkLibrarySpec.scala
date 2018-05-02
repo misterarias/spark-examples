@@ -1,9 +1,9 @@
 package samples.calculators
 
 import org.scalatest._
-import samples.BaseSpec
+import samples.utils.TestHelper
 
-class SparkLibrarySpec extends BaseSpec with Matchers  {
+class SparkLibrarySpec extends TestHelper with Matchers  {
 
   "A PiCalculator" should "not aproximate PI after 1 iteration" in {
     val calc = new PiCalculator(1, sc)

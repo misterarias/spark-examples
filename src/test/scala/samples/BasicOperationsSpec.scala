@@ -2,8 +2,9 @@ package samples
 
 import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.Matchers
+import utils.TestHelper
 
-class BasicOperationsSpec extends BaseSpec with Matchers {
+class BasicOperationsSpec extends TestHelper with Matchers {
   "A fold" should "return the mix of a function and an initial value " in {
     var rdd = sc.parallelize(1 to 4)
     val fun = (op1: Int, op2: Int) => op1 + op2
